@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "node", "test.js" ]
+CMD [ "node", "crud.js" ]
