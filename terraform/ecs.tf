@@ -56,7 +56,7 @@ resource "aws_ecs_service" "user_ecs_service" {
   task_definition                    = aws_ecs_task_definition.marketboro_task.arn
   desired_count                      = 2
   deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent         = 10
+  deployment_maximum_percent         = 600
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
 
