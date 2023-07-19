@@ -9,7 +9,7 @@ AWS.config.update({
 });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
-const tableName = 'my-table';
+const tableName = 'marketboro_table';
 
 const app = express();
 app.use(express.json());

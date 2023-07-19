@@ -64,9 +64,9 @@ resource "aws_vpc_endpoint" "tf_race_endpoint_logs" {
   private_dns_enabled = true
 }
 
-# resource "aws_vpc_endpoint" "tf_race_endpoint_dynamodb" {
-#   vpc_id               = module.vpc.vpc_id
-#   service_name         = "com.amazonaws.ap-northeast-2.dynamodb"
-#   vpc_endpoint_type    = "Gateway"
-#   route_table_ids      = module.vpc.private_route_table_ids
-# }
+resource "aws_vpc_endpoint" "tf_race_endpoint_dynamodb" {
+  vpc_id               = module.vpc.vpc_id
+  service_name         = "com.amazonaws.ap-northeast-2.dynamodb"
+  vpc_endpoint_type    = "Gateway"
+  route_table_ids      = module.vpc.private_route_table_ids
+}
