@@ -1,5 +1,5 @@
 resource "aws_lb" "user_lb" {
-  name               = "tf-race-user-alb"
+  name               = "tf-marketboro-alb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.public_sg.id]
@@ -7,7 +7,7 @@ resource "aws_lb" "user_lb" {
 }
 
 resource "aws_alb_target_group" "user_target_group" {
-  name        = "tf-user-tg"
+  name        = "tf-marketboro-tg"
   port        = 80
   protocol    = "HTTP"
   vpc_id      = module.vpc.vpc_id
