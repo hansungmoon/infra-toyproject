@@ -31,12 +31,14 @@ jobs:
     needs: configure_aws # This job depends on 'configure_aws' job to complete first
     steps:
       - name: Terraform Init
-        working-directory: terraform/dev/vpc
-        run: terraform init
+        run: |
+          cd terraform/dev/vpc
+          terraform init
 
       - name: Terraform Apply
-        working-directory: terraform/dev/vpc
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: |
+          cd terraform/dev/vpc
+          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
   deploy_storage:
     name: Deploy Storage
@@ -44,12 +46,14 @@ jobs:
     needs: [deploy_vpc] # This job depends on 'deploy_vpc' job to complete first
     steps:
       - name: Terraform Init
-        working-directory: terraform/dev/storage
-        run: terraform init
+        run: |
+          cd terraform/dev/storage
+          terraform init
 
       - name: Terraform Apply
-        working-directory: terraform/dev/storage
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: |
+          cd terraform/dev/storage
+          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
   deploy_instance:
     name: Deploy Instance
@@ -57,9 +61,11 @@ jobs:
     needs: [deploy_storage] # This job depends on 'deploy_storage' job to complete first
     steps:
       - name: Terraform Init
-        working-directory: terraform/dev/instance
-        run: terraform init
+        run: |
+          cd terraform/dev/instance
+          terraform init
 
       - name: Terraform Apply
-        working-directory: terraform/dev/instance
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: |
+          cd terraform/dev/instance
+          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
