@@ -8,8 +8,8 @@ on:
       - 'terraform/**' # Trigger the workflow only when files in the terraform directory are pushed
 
 jobs:
-  configure_aws:
-    name: Configure AWS Credentials and Install Terraform
+  deploy_all_resources:
+    name: Deploy All Resources
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,41 +25,14 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
 
-  deploy_vpc:
-    name: Deploy VPC
-    runs-on: ubuntu-latest
-    needs: configure_aws # This job depends on 'configure_aws' job to complete first
-    steps:
-      - name: Terraform Init
+      - name: Terraform Init - Deploy VPC
         working-directory: ./terraform/dev/vpc
-        run: terraform init
+        run: terraform init && terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
-      - name: Terraform Apply
-        working-directory: ./terraform/dev/vpc
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
-
-  deploy_storage:
-    name: Deploy Storage
-    runs-on: ubuntu-latest
-    needs: [deploy_vpc] # This job depends on 'deploy_vpc' job to complete first
-    steps:
-      - name: Terraform Init
+      - name: Terraform Init - Deploy Storage
         working-directory: ./terraform/dev/storage
-        run: terraform init
+        run: terraform init && terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
-      - name: Terraform Apply
-        working-directory: ./terraform/dev/storage
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
-
-  deploy_instance:
-    name: Deploy Instance
-    runs-on: ubuntu-latest
-    needs: [deploy_storage] # This job depends on 'deploy_storage' job to complete first
-    steps:
-      - name: Terraform Init
+      - name: Terraform Init - Deploy Instance
         working-directory: ./terraform/dev/instance
-        run: terraform init
-
-      - name: Terraform Apply
-        working-directory: ./terraform/dev/instance
-        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: terraform init && terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
