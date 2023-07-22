@@ -1,0 +1,63 @@
+name: Marketboro Terraform CI/CD
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/**' 
+
+jobs:
+  deploy_vpc:
+    name: Deploy VPC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        working-directory: terraform/dev/vpc
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: terraform/dev/vpc
+        run: terraform apply -auto-approve
+
+  deploy_storage:
+    name: Deploy Storage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        working-directory: terraform/dev/storage
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: terraform/dev/storage
+        run: terraform apply -auto-approve
+
+  deploy_instance:
+    name: Deploy Instance
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        working-directory: terraform/dev/instance
+        run: terraform init
+
+      - name: Terraform Apply
+        working-directory: terraform/dev/instance
+        run: terraform apply -auto-approve
