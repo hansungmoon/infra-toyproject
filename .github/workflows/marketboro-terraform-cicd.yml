@@ -36,3 +36,7 @@ jobs:
       - name: Terraform Init - Deploy Instance
         working-directory: ./terraform/dev/instance
         run: terraform init && terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+      
+      - name: Terraform Init - Deploy Monitor Instance
+        working-directory: ./terraform/monitor-instance
+        run: terraform init && terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
