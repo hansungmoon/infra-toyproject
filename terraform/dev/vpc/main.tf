@@ -1,3 +1,4 @@
+################################ VPC ####################################
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
@@ -28,8 +29,7 @@ module "vpc" {
   }
 }
 
-# VPC 엔드포인트 설정
-  # priavate subnet 에서 ECR 을 사용하기 위함
+################################ VPC 엔드포인트 ####################################
 resource "aws_vpc_endpoint" "tf_s3_endpoint_gateway" {
   vpc_id               = module.vpc.vpc_id
   service_name         = "com.amazonaws.ap-northeast-2.s3"
@@ -69,4 +69,80 @@ resource "aws_vpc_endpoint" "tf_race_endpoint_dynamodb" {
   service_name         = "com.amazonaws.ap-northeast-2.dynamodb"
   vpc_endpoint_type    = "Gateway"
   route_table_ids      = module.vpc.private_route_table_ids
+}
+
+################################ 보안그룹 ####################################
+
+resource "aws_security_group" "public_sg" {
+
+  name = "TRF_SG_PUBLIC"
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "TRF-SG-PUB"
+  }
+}
+
+resource "aws_security_group" "private_sg" {
+
+  name = "TRF_SG_PRIVATE"
+  vpc_id = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "all"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "TRF-SG-PRV"
+  }
 }
