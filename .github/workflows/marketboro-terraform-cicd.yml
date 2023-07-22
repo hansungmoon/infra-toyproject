@@ -31,14 +31,10 @@ jobs:
     needs: configure_aws # This job depends on 'configure_aws' job to complete first
     steps:
       - name: Terraform Init
-        run: |
-          cd terraform/dev/vpc
-          terraform init
+        run: terraform init -chdir=terraform/dev/vpc
 
       - name: Terraform Apply
-        run: |
-          cd terraform/dev/vpc
-          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: terraform apply -auto-approve -chdir=terraform/dev/vpc -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
   deploy_storage:
     name: Deploy Storage
@@ -46,14 +42,10 @@ jobs:
     needs: [deploy_vpc] # This job depends on 'deploy_vpc' job to complete first
     steps:
       - name: Terraform Init
-        run: |
-          cd terraform/dev/storage
-          terraform init
+        run: terraform init -chdir=terraform/dev/storage
 
       - name: Terraform Apply
-        run: |
-          cd terraform/dev/storage
-          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: terraform apply -auto-approve -chdir=terraform/dev/storage -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
   deploy_instance:
     name: Deploy Instance
@@ -61,11 +53,7 @@ jobs:
     needs: [deploy_storage] # This job depends on 'deploy_storage' job to complete first
     steps:
       - name: Terraform Init
-        run: |
-          cd terraform/dev/instance
-          terraform init
+        run: terraform init -chdir=terraform/dev/instance
 
       - name: Terraform Apply
-        run: |
-          cd terraform/dev/instance
-          terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
+        run: terraform apply -auto-approve -chdir=terraform/dev/instance -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
