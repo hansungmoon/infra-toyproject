@@ -2,6 +2,8 @@ name: Marketboro Terraform CI/CD
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'terraform/**' # Trigger the workflow only when files in the terraform directory are pushed
 
