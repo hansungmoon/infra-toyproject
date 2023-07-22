@@ -43,7 +43,7 @@ jobs:
 
       - name: Terraform Apply
         working-directory: terraform/dev/storage
-        run: terraform apply -auto-approve -var="access_key=${{ secrets.ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.SECRET_KEY }}"
+        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
 
   deploy_instance:
     name: Deploy Instance
@@ -62,4 +62,4 @@ jobs:
 
       - name: Terraform Apply
         working-directory: terraform/dev/instance
-        run: terraform apply -auto-approve -var="access_key=${{ secrets.ACCESS_KEY_ID }}" -var="secret_key=${{ secrets.SECRET_KEY }}"
+        run: terraform apply -auto-approve -var="ACCESS_KEY_ID=${{ secrets.ACCESS_KEY_ID }}" -var="SECRET_KEY=${{ secrets.SECRET_KEY }}"
