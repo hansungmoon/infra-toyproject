@@ -10,7 +10,7 @@ resource "aws_instance" "example_instance" {
 }
 
 
-############################## data #####################################
+############################## data ####################################
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config = {
