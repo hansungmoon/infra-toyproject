@@ -7,6 +7,9 @@ terraform init
 terraform plan
 terraform apply
 ```
+- 하단의 API 문서를 참고하여 요청을 보내 테스트 가능
+- Grafana 접속
+- http://15.165.74.4:3000/ 
 
 back - vpc - instance - storage - monitor-instance 폴더순으로 들어가서 위의 3개의 명령어를 진행한다.
 # 프로젝트 소개
