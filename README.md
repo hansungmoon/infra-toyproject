@@ -1,6 +1,15 @@
-# 프로젝트 소개
+# 동작방법
 
----
+```bash
+#example
+# /terraform/dev/back
+terraform init
+terraform plan
+terraform apply
+```
+
+back - vpc - instance - storage - monitor-instance 폴더순으로 들어가서 위의 3개의 명령어를 진행한다.
+# 프로젝트 소개
 
 ## 요구사항
 
@@ -32,8 +41,6 @@
 ```
 
 # 프로젝트 결과물
-
----
 
 ## 인프라 아키텍쳐
 
