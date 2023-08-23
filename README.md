@@ -47,7 +47,7 @@ back - vpc - instance - storage - monitor-instance 폴더순으로 들어가서 
 
 ## 인프라 아키텍쳐
 
-![image](https://github.com/hansungmoon/marketboro/assets/98951034/27836e2c-7627-4931-b162-dc5944566f41)
+![image](https://github.com/hansungmoon/marketboro/assets/98951034/30616cce-fb05-4117-8388-37959552d447)
 
 
 ## ECS 기반 서비스
@@ -186,14 +186,16 @@ ECS와 DynamoDB의 메트릭을 CloudWatch에서 받아와서 Grafana로 시각�
 
 메모리 사용량과 CPU 사용량 체크
 
-![image](https://github.com/hansungmoon/marketboro/assets/98951034/e20a4f2e-24b0-4cfb-9a89-1a11746fc506)
+![image](https://github.com/hansungmoon/marketboro/assets/98951034/2bf94005-c26f-4e62-993b-a5f3c24f65bc)
+
 
 
 - DynamoDB
 
 프로비저닝된 값 사용량과 읽기와 쓰기의 횟수 등 체크
 
-![image](https://github.com/hansungmoon/marketboro/assets/98951034/5d7242cb-ba05-445b-85a0-82f3ee5bfc29)
+![image](https://github.com/hansungmoon/marketboro/assets/98951034/ccdbcf81-ec5b-41b4-aca9-8cd02406f488)
+
 
 
 ### CloudWatch log group 모니터링
@@ -203,7 +205,8 @@ ECS가 배포되면 생기는 CloudWatch loggroup을 Grafana로 시각화 하였
 수신 또는 송신되는 초당 바이트를 측정하여 여러개의 로그그룹을 비교할 수 있습니다.
 에러 로그의 개수를 확인 할 수있습니다.
 
-![image](https://github.com/hansungmoon/marketboro/assets/98951034/abbf199c-9704-4a45-9c9e-584e57de6c75)
+s![image](https://github.com/hansungmoon/marketboro/assets/98951034/50789def-13fc-4ef8-935f-987dbc0c0151)
+
 
 
 ### 부하테스트와 모니터링 연결
@@ -212,7 +215,8 @@ k6과 InfluxDB를 함께 사용하여, k6은 웹 애플리케이션의 부하를
 
 k6은 성능 테스트 결과를 InfluxDB로 직접 전송할 수 있는 플러그인을 제공하므로, 테스트 실행 중에 생성된 지표 데이터를 InfluxDB에 전송하여 Grafana와 연결해서 시각화하여 모니터링 할 수 있었습니다.
 
-![image](https://github.com/hansungmoon/marketboro/assets/98951034/8a17ba9c-c03e-489e-9edd-92d2229b0e91)
+![image](https://github.com/hansungmoon/marketboro/assets/98951034/fe4f9da4-9ae0-46a0-a5f7-1ee428d8da83)
+
 
 
 이를 통해 현재 서버가 얼마만큼의 부하를 감당할 수 있으며 반응 시간은 적합한 지를 검토할 수 있도록 하였습니다.
